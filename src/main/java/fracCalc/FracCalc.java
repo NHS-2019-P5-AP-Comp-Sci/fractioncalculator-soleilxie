@@ -174,7 +174,6 @@ public class FracCalc {
     		numerator2 = secondValue.substring(wholeIdx2, slashIdx2);
     		denominator2 = secondValue.substring(slashIdx2 + 1);
     	} 
-    	
     	else if (!secondValue.equals(""))
     	{
     		numerator2 = secondValue;
@@ -183,38 +182,41 @@ public class FracCalc {
     	{
     		numerator2 = "0";
     	}
-    	if(denominator2.equals("1") && whole2.equals("0"))
+
+    	int intNumerator1 = Math.abs(Integer.parseInt(whole1)) * Integer.parseInt(denominator1) + Integer.parseInt(numerator1) ;
+    	if(Integer.parseInt(whole1)<0)
     	{
-    		whole2 = numerator2;
-    		numerator2 = "0";
+    		intNumerator1 *= -1;
     	}
-//
-//    	int intNumerator1 = Integer.parseInt(whole1) * Integer.parseInt(denominator1) + Integer.parseInt(numerator1) ;
-//    	int intDenominator1 = Integer.parseInt(denominator1);
-//    	
-//    	
-//    	int intNumerator2 = Integer.parseInt(whole2) * Integer.parseInt(denominator2) + Integer.parseInt(numerator2) ;
-//    	int intDenominator2 = Integer.parseInt(denominator2);
-//
+    	int intDenominator1 = Integer.parseInt(denominator1);
+    	
+    	
+    	int intNumerator2 = Math.abs(Integer.parseInt(whole2)) * Integer.parseInt(denominator2) + Integer.parseInt(numerator2) ;
+    	if(Integer.parseInt(whole2)<0)
+    	{
+    		intNumerator2 *= -1;
+    	}
+    	int intDenominator2 = Integer.parseInt(denominator2);
+
     	String retVal = "";
-//    	if(operand.equals("+"))
-//    	{
-//    		retVal = add(intNumerator1, intDenominator1,intNumerator2, intDenominator2);
-//    	}
-//    	if(operand.equals("-"))
-//    	{
-//    		retVal = subtract(intNumerator1, intDenominator1,intNumerator2, intDenominator2);	
-//    	}
-//    	if(operand.equals("*"))
-//    	{
-//    		retVal = multiply(intNumerator1, intDenominator1,intNumerator2, intDenominator2);
-//    	}
-//    	if(operand.equals("/"))
-//    	{
-//    		retVal = divide(intNumerator1, intDenominator1,intNumerator2, intDenominator2);
-//    	}
-//    	
-    	retVal = "whole:"+ whole2 + " numerator:" + numerator2 + " denominator:" + denominator2;
+    	if(operand.equals("+"))
+    	{
+    		retVal = add(intNumerator1, intDenominator1,intNumerator2, intDenominator2);
+    	}
+    	if(operand.equals("-"))
+    	{
+    		retVal = subtract(intNumerator1, intDenominator1,intNumerator2, intDenominator2);	
+    	}
+    	if(operand.equals("*"))
+    	{
+    		retVal = multiply(intNumerator1, intDenominator1,intNumerator2, intDenominator2);
+    	}
+    	if(operand.equals("/"))
+    	{
+    		retVal = divide(intNumerator1, intDenominator1,intNumerator2, intDenominator2);
+    	}
+    	
+ //   	retVal = "whole:"+ whole2 + " numerator:" + numerator2 + " denominator:" + denominator2;
     	
     	
         return retVal;
