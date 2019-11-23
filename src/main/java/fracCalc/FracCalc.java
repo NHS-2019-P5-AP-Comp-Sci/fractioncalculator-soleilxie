@@ -31,6 +31,73 @@ public class FracCalc {
     //
     // The function should return the result of the fraction after it has been calculated
     //      e.g. return ==> "1_1/4"
+    public static String add(int num1, int den1, int num2, int den2) 
+    {
+    	if(den1 != den2)
+    	{
+    		int val = den1;
+    		den1 *= den2;
+    		num1 *= den2;
+    		
+    		den2 *= val;
+    		num2 *= val;
+    	}
+    	
+    	
+    	return reduceFrac((num1+num2),(den1));
+    }
+    public static String multiply(int num1, int den1, int num2, int den2) 
+    {
+    	
+    	return reduceFrac((num1 * num2), (den1 * den2));
+    }
+    public static String divide(int num1, int den1, int num2, int den2) 
+    {
+    	int val = num2;
+    	num2 = den2;
+    	den2 = val;
+    	
+    	
+    	return reduceFrac((num1 * num2),(den1 * den2));
+    }
+    public static String subtract(int num1, int den1, int num2, int den2) 
+    {
+    	if(den1 != den2)
+    	{
+    		int val = den1;
+    		den1 *= den2;
+    		num1 *= den2;
+    		den2 *= val;
+    		num2 *= val;
+    	}
+    	
+    	
+    	return reduceFrac((num1-num2),(den1));
+    }
+    
+    public static String reduceFrac(int num, int den)
+    {
+    	int GCF = 1;
+    	for(int i=1; i<=num; i++)
+    	{
+    		if(((num % i) == 0) && ((den % i)== 0))
+    		{
+    			GCF = i;
+    		}
+    	}
+    	num /= GCF;
+    	den /= GCF;
+    	String retval = "";
+    	if( den == 1)
+    	{
+    		retval = num + "";
+    	}
+    	else
+    	{
+    		retval = num + "/" + den;
+    	}
+    	return retval;
+    }
     public static String produceAnswer(String input)
     {
         // TODO: Implement this function to produce the solution to the input
@@ -38,43 +105,121 @@ public class FracCalc {
     	String firstValue = input.substring(0, spaceIndex1);
     	String operand = input.substring(spaceIndex1 + 1, spaceIndex1 + 2);
     	String secondValue = input.substring(spaceIndex1 + 3);
-    	int wholeIdx = 0;
-    	String whole = "0";
-    	String numerator = "0";
-    	String denominator = "1";
+    	int wholeIdx1 = 0;
+    	String whole1 = "0";
+    	String numerator1 = "0";
+    	String denominator1 = "1";
+    	int slashIdx1 = 0;
     	
     	int i = 0;
-    	int slashIdx = 0;
-    	while(i < secondValue.length())
+    	while(i < firstValue.length())
     	{
-    		if(secondValue.substring(i, i+1).equals("/"))
+    		if(firstValue.substring(i, i+1).equals("/"))
     		{
-    			slashIdx = i;
+    			slashIdx1 = i;
     		}
-    		if(secondValue.substring(i, i+1).equals("_"))
+    		if(firstValue.substring(i, i+1).equals("_"))
     		{
-    	    	wholeIdx = i;
+    	    	wholeIdx1 = i;
     		}
     		i++;
     	}
     	
-    	if(wholeIdx !=0)
+    	if(wholeIdx1 !=0)
     	{
-    		whole = secondValue.substring(0, wholeIdx);
-    		wholeIdx++;
+    		whole1 = firstValue.substring(0, wholeIdx1);
+    		wholeIdx1++;
     	}
-    	if(slashIdx !=0)
+    	if(slashIdx1 !=0)
     	{
-    		
-    		numerator = secondValue.substring(wholeIdx, slashIdx);
-    		denominator = secondValue.substring(slashIdx+ 1);
-    	} else {
-    		numerator = secondValue;
+    		numerator1 = firstValue.substring(wholeIdx1, slashIdx1);
+    		denominator1 = firstValue.substring(slashIdx1 + 1);
+    	} 
+    	else if (!firstValue.equals(""))
+    	{
+    		numerator1 = firstValue;
     	}
-    	String retVal = "whole:"+ whole + " numerator:" + numerator + " denominator:" + denominator;
-    	retVal = secondValue;
+    	else
+    	{
+    		numerator1 = "0";
+    	}
+    	
+    	int wholeIdx2 = 0;
+    	String whole2 = "0";
+    	String numerator2 = "0";
+    	String denominator2 = "1";
+    	int slashIdx2 = 0;
+    	
+    	 i = 0;
+    	while(i < secondValue.length())
+    	{
+    		if(secondValue.substring(i, i+1).equals("/"))
+    		{
+    			slashIdx2 = i;
+    		}
+    		if(secondValue.substring(i, i+1).equals("_"))
+    		{
+    	    	wholeIdx2 = i;
+    		}
+    		i++;
+    	}
+    	
+    	if(wholeIdx2 !=0)
+    	{
+    		whole2 = secondValue.substring(0, wholeIdx2);
+    		wholeIdx2++;
+    	}
+    	if(slashIdx2 !=0)
+    	{
+    		numerator2 = secondValue.substring(wholeIdx2, slashIdx2);
+    		denominator2 = secondValue.substring(slashIdx2 + 1);
+    	} 
+    	
+    	else if (!secondValue.equals(""))
+    	{
+    		numerator2 = secondValue;
+    	}
+    	else
+    	{
+    		numerator2 = "0";
+    	}
+    	if(denominator2.equals("1") && whole2.equals("0"))
+    	{
+    		whole2 = numerator2;
+    		numerator2 = "0";
+    	}
+//
+//    	int intNumerator1 = Integer.parseInt(whole1) * Integer.parseInt(denominator1) + Integer.parseInt(numerator1) ;
+//    	int intDenominator1 = Integer.parseInt(denominator1);
+//    	
+//    	
+//    	int intNumerator2 = Integer.parseInt(whole2) * Integer.parseInt(denominator2) + Integer.parseInt(numerator2) ;
+//    	int intDenominator2 = Integer.parseInt(denominator2);
+//
+    	String retVal = "";
+//    	if(operand.equals("+"))
+//    	{
+//    		retVal = add(intNumerator1, intDenominator1,intNumerator2, intDenominator2);
+//    	}
+//    	if(operand.equals("-"))
+//    	{
+//    		retVal = subtract(intNumerator1, intDenominator1,intNumerator2, intDenominator2);	
+//    	}
+//    	if(operand.equals("*"))
+//    	{
+//    		retVal = multiply(intNumerator1, intDenominator1,intNumerator2, intDenominator2);
+//    	}
+//    	if(operand.equals("/"))
+//    	{
+//    		retVal = divide(intNumerator1, intDenominator1,intNumerator2, intDenominator2);
+//    	}
+//    	
+    	retVal = "whole:"+ whole2 + " numerator:" + numerator2 + " denominator:" + denominator2;
+    	
+    	
         return retVal;
     }
+    
 
     // TODO: Fill in the space below with any helper methods that you think you will need
 
