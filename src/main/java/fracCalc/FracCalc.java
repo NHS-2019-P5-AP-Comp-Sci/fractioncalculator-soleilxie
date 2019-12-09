@@ -9,14 +9,15 @@ public class FracCalc {
 
     public static void main(String[] args)
     {
-    	
         // TODO: Read the input from the user and call produceAnswer with an equation
     	Scanner userInput = new Scanner(System.in);
-    	String frac = " + ";
+    	String frac = "";
     	while(!frac.equals("quit"))
 		{
-			
-			System.out.println(produceAnswer(frac));
+ //Loops until the user types "quit"
+			if(!frac.equals("")) {
+				System.out.println(produceAnswer(frac));
+			}
 	    	System.out.println("Enter the equation (to stop type 'quit'): ");
 	    	frac = userInput.nextLine();
 		}
@@ -33,6 +34,7 @@ public class FracCalc {
     //      e.g. return ==> "1_1/4"
     public static String add(int num1, int den1, int num2, int den2) 
     {
+  //method to add 2 fractions
     	if(den1 != den2)
     	{
     		int val = den1;
@@ -48,11 +50,12 @@ public class FracCalc {
     }
     public static String multiply(int num1, int den1, int num2, int den2) 
     {
-    	
+    //method to multiply 2 fractions
     	return reduceFrac((num1 * num2), (den1 * den2));
     }
     public static String divide(int num1, int den1, int num2, int den2) 
     {
+    //method to divide 2 fractions
     	int val = num2;
     	num2 = den2;
     	den2 = val;
@@ -62,6 +65,7 @@ public class FracCalc {
     }
     public static String subtract(int num1, int den1, int num2, int den2) 
     {
+    	//method to subtract 2 fractions
     	if(den1 != den2)
     	{
     		int val = den1;
@@ -77,9 +81,12 @@ public class FracCalc {
     
     public static String reduceFrac(int num, int den)
     {
+    	//method to reduce two fractions
     	int GCF = 1;
-    	for(int i=1; i<=num; i++)
+    	int whole = 0;
+    	for(int i=1; i<=Math.abs(num); i++)
     	{
+    		//loops to find greatest common factor
     		if(((num % i) == 0) && ((den % i)== 0))
     		{
     			GCF = i;
@@ -88,12 +95,32 @@ public class FracCalc {
     	num /= GCF;
     	den /= GCF;
     	String retval = "";
-    	if( den == 1)
+    	//checks to see if the solution is zero
+    	if(num == 0)
     	{
-    		retval = num + "";
+    		retval = "0";
+    	}
+    	else if( Math.abs(den) == 1)
+    	{
+    		retval = num / den + "";
+    	}
+    	else if(num/den !=0)
+    	{
+    		
+    		whole = num/den;
+			num = Math.abs(num);
+			den = Math.abs(den);
+    		num = Math.abs(num % den);
+    		retval = whole + "_" + num + "/" + den;
     	}
     	else
     	{
+    		//checks to see if the result will be negative
+    		if((double)num/den < 0)
+    		{
+    			num *= den/Math.abs(den);
+    			den = Math.abs(den);
+    		}
     		retval = num + "/" + den;
     	}
     	return retval;
@@ -102,18 +129,24 @@ public class FracCalc {
     {
         // TODO: Implement this function to produce the solution to the input
     	int spaceIndex1 = input.indexOf(" ");
+    	//finds the first val, second val, and operand
     	String firstValue = input.substring(0, spaceIndex1);
     	String operand = input.substring(spaceIndex1 + 1, spaceIndex1 + 2);
     	String secondValue = input.substring(spaceIndex1 + 3);
+    	
+    	//sets the default values of each variable
     	int wholeIdx1 = 0;
     	String whole1 = "0";
     	String numerator1 = "0";
     	String denominator1 = "1";
+    	
     	int slashIdx1 = 0;
+    	
     	
     	int i = 0;
     	while(i < firstValue.length())
     	{
+    		//loops to find the indexes of slash and underscore
     		if(firstValue.substring(i, i+1).equals("/"))
     		{
     			slashIdx1 = i;
@@ -127,6 +160,7 @@ public class FracCalc {
     	
     	if(wholeIdx1 !=0)
     	{
+    		//finds the whole number
     		whole1 = firstValue.substring(0, wholeIdx1);
     		wholeIdx1++;
     	}
@@ -150,6 +184,8 @@ public class FracCalc {
     	String denominator2 = "1";
     	int slashIdx2 = 0;
     	
+    	
+    	//finds info for second value
     	 i = 0;
     	while(i < secondValue.length())
     	{
@@ -183,6 +219,7 @@ public class FracCalc {
     		numerator2 = "0";
     	}
 
+    	//finds the improper fraction of the first value
     	int intNumerator1 = Math.abs(Integer.parseInt(whole1)) * Integer.parseInt(denominator1) + Integer.parseInt(numerator1) ;
     	if(Integer.parseInt(whole1)<0)
     	{
@@ -190,7 +227,7 @@ public class FracCalc {
     	}
     	int intDenominator1 = Integer.parseInt(denominator1);
     	
-    	
+    	//finds the improper fraction of the second value
     	int intNumerator2 = Math.abs(Integer.parseInt(whole2)) * Integer.parseInt(denominator2) + Integer.parseInt(numerator2) ;
     	if(Integer.parseInt(whole2)<0)
     	{
@@ -198,6 +235,7 @@ public class FracCalc {
     	}
     	int intDenominator2 = Integer.parseInt(denominator2);
 
+    	//checks to see which operand should be used
     	String retVal = "";
     	if(operand.equals("+"))
     	{
